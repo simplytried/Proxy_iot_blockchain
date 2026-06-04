@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Re-Encryption | IoT Secure Data Sharing{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<!-- Navigation -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="brand-icon">🔐</span>
+    <span class="brand-name">Re-Encryption</span>
+  </div>
+  <nav class="topbar-nav">
+    {% block nav %}
+    <a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint=='home' %}active{% endif %}">Home</a>
+    <a href="{{ url_for('owner_login') }}" class="nav-link {% if 'owner' in request.endpoint %}active{% endif %}">Data Owner</a>
+    <a href="{{ url_for('user_login') }}" class="nav-link {% if 'user' in request.endpoint %}active{% endif %}">Data User</a>
+    <a href="{{ url_for('ta_login') }}" class="nav-link {% if 'ta' in request.endpoint %}active{% endif %}">Trusted Authority</a>
+    <a href="{{ url_for('proxy_login') }}" class="nav-link {% if 'proxy' in request.endpoint %}active{% endif %}">Proxy Server</a>
+    <a href="{{ url_for('csp_login') }}" class="nav-link {% if 'csp' in request.endpoint %}active{% endif %}">CSP</a>
+    {% endblock %}
+  </nav>
+</header>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for cat, msg in messages %}
+        <div class="flash flash-{{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- Page Content -->
+{% block content %}{% endblock %}
+
+<!-- Footer -->
+<footer class="site-footer">
+  <p>&copy; 2026 Proxy Re-Encryption IoT Blockchain Project &nbsp;|&nbsp; Secure Data Sharing in IoT</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
